@@ -6,8 +6,8 @@ COOKIE_PATH="$HOME/archive/cookies.txt"
 
 # Check if a username was provided
 if [ -z "$1" ]; then
-    echo "Usage: ./add_tiktok.sh <username>"
-    echo "Example: ./add_tiktok.sh nike"
+    echo "Usage: ./add_new.sh <username>"
+    echo "Example: ./add_new.sh adinapp1"
     exit 1
 fi
 
@@ -28,8 +28,8 @@ if [[ -n "$USER_ID" && "$USER_ID" =~ ^[0-9]+$ ]]; then
     echo ">>> Created folder: $TARGET_DIR"
     cd "$TARGET_DIR" || exit
 
-    # 3. Initial Download 
-    echo ">>> Performing initial download of latest 30 videos..."
+    # 3. Initial Download (Full Archive)
+    echo ">>> Downloading full archive for @$USERNAME..."
     yt-dlp --cookies "$COOKIE_PATH" \
            --download-archive "downloaded.txt" \
            --output "%(uploader)s - %(upload_date>%Y-%m-%d)s - %(title)s [%(id)s].%(ext)s" \

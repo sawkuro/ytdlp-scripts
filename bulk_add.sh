@@ -2,7 +2,7 @@
 
 # --- CONFIG ---
 BASE_DIR="$HOME/archive/g"
-COOKIE_PATH="$HOME/archive/cookie.txt"
+COOKIE_PATH="$HOME/archive/farmer.txt"
 INPUT_LIST="new_users.txt"  # Create this file with one username per line
 
 # Check if input list exists
@@ -31,13 +31,16 @@ while IFS= read -r USERNAME || [ -n "$USERNAME" ]; do
         echo "Creating: $USERNAME [$USER_ID]"
         cd "$TARGET_DIR" || continue
 
-        # 2. Initial Download (Latest 30)
+        # 2. Initial Download (Full Archive)
         yt-dlp --cookies "$COOKIE_PATH" \
                --download-archive "downloaded.txt" \
                --output "%(uploader)s - %(upload_date>%Y-%m-%d)s - %(title)s [%(id)s].%(ext)s" \
                "https://www.tiktok.com/@$USER_ID"
         
         cd "$BASE_DIR"
+        
+        # Small delay to avoid rate limiting
+        sleep 2
     else
         echo "FAILED: Could not find ID for $USERNAME"
     fi
